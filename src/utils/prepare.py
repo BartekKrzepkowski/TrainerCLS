@@ -16,11 +16,13 @@ def prepare_model(model_name, model_params, model_path=None, init=None):
 
 
 def prepare_loaders(dataset_name, dataset_params, loader_params):
-    train_dataset, _, test_dataset = DATASET_NAME_MAP[dataset_name](**dataset_params)
+    train_dataset, train_without_aug_dataset, test_dataset = DATASET_NAME_MAP[dataset_name](**dataset_params)
     train_loader = DataLoader(train_dataset, shuffle=True, **loader_params)
+    train_without_aug_loader = DataLoader(train_dataset, shuffle=True, **loader_params)
     test_loader = DataLoader(test_dataset, shuffle=False, **loader_params)
     loaders = {
         'train': train_loader,
+        'train_without_aug': train_without_aug_loader,
         'test': test_loader
     }
     return loaders

@@ -13,7 +13,7 @@ from omegaconf import OmegaConf
 
 from src.modules.aux_modules import TraceFIM
 from src.modules.metrics import RunStats
-from trainer.trainer_classification import TrainerClassification
+from src.trainer.trainer_classification import TrainerClassification
 from src.utils.prepare import prepare_criterion, prepare_loaders, prepare_model, prepare_optim_and_scheduler
 from src.utils.utils_criterion import get_samples_weights
 from src.utils.utils_data import count_classes
@@ -174,6 +174,7 @@ def objective(exp_name, model_name, dataset_name, lr, wd, epochs):
     config.log_multi = batches_per_epoch // (LOGS_PER_EPOCH if LOGS_PER_EPOCH != 0 else batches_per_epoch)
     config.run_stats_multi = batches_per_epoch // 2
     config.fim_trace_multi = batches_per_epoch // 2
+    config.train_without_aug_epoch_freq = 0.1
     
     config.clip_value = CLIP_VALUE
     config.random_seed = RANDOM_SEED
@@ -213,4 +214,4 @@ if __name__ == "__main__":
         )
     logging.info(f'Script started model s-{conf.model_name} on dataset s-{conf.dataset_name} with lr={conf.lr}, wd={conf.wd}, epochs={conf.epochs}.')
     
-    objective('phase2', conf.model_name, conf.dataset_name, conf.lr, conf.wd, conf.epochs)
+    objective('normal', conf.model_name, conf.dataset_name, conf.lr, conf.wd, conf.epochs)

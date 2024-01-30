@@ -11,4 +11,4 @@
 eval "$(conda shell.bash hook)"
 conda activate clpi_env
 source src/configs/env_variables.sh
-WANDB__SERVICE_WAIT=300 python -m scripts.python_new.$1 model_name=mm_resnet dataset_name=mm_cifar10 lr=5e-1 wd=0.0 phase1=180 phase2=0 phase3=0 phase4=0
+WANDB__SERVICE_WAIT=300 python -m scripts.python.$1 model_name=mm_resnet dataset_name=mm_cifar10 lr=5e-1 wd=0.0 phase1=180 phase2=0 phase3=0 phase4=0

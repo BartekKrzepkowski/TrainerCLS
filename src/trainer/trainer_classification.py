@@ -5,7 +5,6 @@ from typing import Dict
 import torch
 from tqdm import tqdm, trange
 
-from data.transforms_ import TRANSFORMS_BLURRED_RIGHT_NAME_MAP, TRANSFORMS_PROPER_RIGHT_NAME_MAP
 from src.modules.metrics import RunStatsBiModal
 from src.utils.common import LOGGERS_NAME_MAP
 
@@ -64,7 +63,8 @@ class TrainerClassification:
             self.run_epoch(phase='train', config=config)
             self.model.eval()
             with torch.no_grad():
-                self.run_epoch(phase='test_proper', config=config)
+                self.run_epoch(phase='train_without_aug', config=config)
+                self.run_epoch(phase='test', config=config)
                 
         logging.info('Training completed.')
             
@@ -122,6 +122,8 @@ class TrainerClassification:
         
         
         for i, data in enumerate(progress_bar):
+            if phase == 'train_without_aug' and i >= int(loader_size * config.train_without_aug_epoch_freq):
+                break
             x_true, y_true = data
             x_true, y_true = x_true.to(self.device), y_true.to(self.device)
             y_pred = self.model(x_true)
