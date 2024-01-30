@@ -1,0 +1,6 @@
+{
+    "model_name": "resnet18",
+    "whether_batchnorm_layers": true,
+    "nonstandard_first_conv": true
+    
+}

@@ -1,0 +1,5 @@
+{
+    "dropout": 0.05,
+    "whether_batchnorm_layers": true,
+    "stochastic_depth_prob": 0.05
+}
